@@ -30,7 +30,12 @@ namespace WebAPI
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:4200", "http://saiderdemozturk.com", "https://saiderdemozturk.com")
+                                      builder.WithOrigins("http://localhost:4200", 
+                                          "http://saiderdemozturk.com",
+                                          "https://saiderdemozturk.com",
+                                          "www.saiderdemozturk.com",
+                                          "https://www.saiderdemozturk.com",
+                                          "http://www.saiderdemozturk.com")
                                              .AllowAnyHeader()
                                              .AllowAnyMethod();
 
