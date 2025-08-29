@@ -43,6 +43,12 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
