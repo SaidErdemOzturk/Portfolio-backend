@@ -1,4 +1,4 @@
-
+ï»¿
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
@@ -8,7 +8,9 @@ using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
+using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -42,7 +44,7 @@ namespace WebAPI
                                   });
             });
 
-            //Autofac,Ninjech,CastleWindsor, StructureMap,LightInject, DryInject -->IoC Container için hazýrlanan altyapýlar.
+            //Autofac,Ninjech,CastleWindsor, StructureMap,LightInject, DryInject -->IoC Container iÃ§in hazÄ±rlanan altyapÄ±lar.
 
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
@@ -79,7 +81,7 @@ namespace WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                //Swagger içerisine Authorizatiýn input text'ini eklememizi saðlýyor
+                //Swagger iÃ§erisine AuthorizatiÄ±n input text'ini eklememizi saÄŸlÄ±yor
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -107,13 +109,9 @@ namespace WebAPI
 
             var app = builder.Build();
 
+            app.UseSwagger();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwaggerUI();
 
             app.ConfigureCustomExceptionMiddleware();
 

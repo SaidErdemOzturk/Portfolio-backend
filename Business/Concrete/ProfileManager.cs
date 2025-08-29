@@ -22,7 +22,7 @@ namespace Business.Concrete
 
         public IDataResult<Profile> GetProfile()
         {
-            return new SuccessDataResult<Profile>(_profileDal.GetAll().First());
+            return new SuccessDataResult<Profile>(_profileDal.GetAll().FirstOrDefault());
         }
 
         public IResult Update(Profile profile)
