@@ -14,7 +14,6 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=104.247.167.202\\MSSQLSERVER2019;Database=said5125_MyPortfolio;User ID=said5125_MyPortfolio;Password=179324865.aA;TrustServerCertificate=True;");
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=said5125_MyPortfolio;Trusted_Connection=true");
         }
 
