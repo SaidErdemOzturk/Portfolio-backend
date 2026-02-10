@@ -34,6 +34,8 @@ namespace WebAPI
                                   {
                                       builder.WithOrigins("http://localhost:4200", 
                                           "http://saiderdemozturk.com",
+                                          "https://saiderdemozturk.github.io/portfolyo",
+                                          "http://saiderdemozturk.github.io/portfolyo",
                                           "https://saiderdemozturk.com",
                                           "www.saiderdemozturk.com",
                                           "https://www.saiderdemozturk.com",
