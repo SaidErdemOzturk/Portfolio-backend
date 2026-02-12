@@ -8,7 +8,7 @@ namespace Business.Constans
 {
     public class Messages
     {
-        public static string PasswordError = "Şifre hatası.";
+        public static string PasswordError = "Girdiğiniz şifre yanlıştır.";
         public static string SuccessfulLogin = "Giriş başarılı.";
         public static string UserNotFound = "Kullanıcı bulunamadı.";
         public static string? AuthorizationDenied = "Yetkisiz işlem";
