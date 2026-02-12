@@ -24,10 +24,8 @@ namespace DataAccess.Concrete.EntityFramework
 
             optionsBuilder.UseSqlServer(cs);
         }
-        //setx SQL_CONNECTION_STRING "Server=104.247.167.202\\MSSQLSERVER2022;Database=said5125_MyPortfolio;User ID=said5125_MyPortfolio;Password=179324865.aA;TrustServerCertificate=True;"
 
         //optionsBuilder.UseSqlServer("Server=104.247.167.202\\MSSQLSERVER2022;Database=said5125_MyPortfolio;User ID=said5125_MyPortfolio;Password=179324865.aA;TrustServerCertificate=True;");
-        //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=said5125_MyPortfolio;Trusted_Connection=true");
         public DbSet<Project> Projects { get; set; }
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<Image> Images { get; set; }
