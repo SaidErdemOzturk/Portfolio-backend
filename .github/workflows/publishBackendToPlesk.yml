@@ -3,7 +3,7 @@ name: Deploy .NET Backend to Plesk
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   DOTNET_VERSION: '8.0'
