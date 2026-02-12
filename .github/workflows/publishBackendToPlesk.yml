@@ -1,0 +1,57 @@
+name: Deploy .NET Backend to Plesk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0' # Projenizin versiyonuna göre (6.0, 7.0, 8.0) güncelleyin
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build and Publish
+        # -c Release: Production modu
+        # -o out: Dosyaları 'out' klasörüne çıkarır
+        run: dotnet publish -c Release -o out
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-app
+          path: out/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-app
+          path: out/
+
+      - name: Deploy to Plesk via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          protocol: ftp
+          local-dir: out/
+          server-dir: /httpdocs/ # .NET Core Plesk'te genellikle bu dizine atılır
+          exclude: |
+            **/appsettings.Development.json
+            **/.git*
+            **/.github*
