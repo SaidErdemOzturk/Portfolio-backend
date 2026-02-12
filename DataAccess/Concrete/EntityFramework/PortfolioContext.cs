@@ -25,6 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
             optionsBuilder.UseSqlServer(cs);
         }
 
+
         //optionsBuilder.UseSqlServer("Server=104.247.167.202\\MSSQLSERVER2022;Database=said5125_MyPortfolio;User ID=said5125_MyPortfolio;Password=179324865.aA;TrustServerCertificate=True;");
         public DbSet<Project> Projects { get; set; }
         public DbSet<Technology> Technologies { get; set; }
