@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  DOTNET_VERSION: '8.0'
+  DOTNET_ENVIRONMENT: 'Production'
+  SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,21 +20,20 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0' # Projenizin versiyonuna göre (6.0, 7.0, 8.0) güncelleyin
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build and Publish
-        # -c Release: Production modu
-        # -o out: Dosyaları 'out' klasörüne çıkarır
-        run: dotnet publish -c Release -o out
+        run: dotnet publish -c Release -o out --no-restore
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: out/
+          path: out
+          if-no-files-found: error
 
   deploy:
     needs: build
@@ -39,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
-          path: out/
+          path: out
 
       - name: Deploy to Plesk via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -50,7 +54,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           protocol: ftp
           local-dir: out/
-          server-dir: /httpdocs/ # .NET Core Plesk'te genellikle bu dizine atılır
+          server-dir: /httpdocs/
           exclude: |
             **/appsettings.Development.json
             **/.git*
