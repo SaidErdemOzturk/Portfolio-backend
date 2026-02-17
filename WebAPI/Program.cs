@@ -109,7 +109,7 @@ namespace WebAPI
             });
 
             var cs = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
-
+            Console.WriteLine($"SQL_CONNECTION_STRING: {cs}");
             if (cs == null)
             {
                 throw new Exception("ENV NULL!!!");
