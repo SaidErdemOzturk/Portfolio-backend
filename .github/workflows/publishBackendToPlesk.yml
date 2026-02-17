@@ -54,7 +54,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           protocol: ftp
           local-dir: out/
-          server-dir: /httpdocs/
+          server-dir: /api.saiderdemozturk.com/
           exclude: |
             **/appsettings.Development.json
             **/.git*
