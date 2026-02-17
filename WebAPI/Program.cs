@@ -108,6 +108,14 @@ namespace WebAPI
                 });
             });
 
+            var cs = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
+
+            if (cs == null)
+            {
+                throw new Exception("ENV NULL!!!");
+            }
+
+
 
             var app = builder.Build();
 
@@ -129,6 +137,8 @@ namespace WebAPI
             app.UseRouting();
 
             app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseExceptionHandler("/error");
 
             app.UseAuthentication();
 
