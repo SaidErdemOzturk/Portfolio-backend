@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+using Business.Abstract;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -22,10 +22,10 @@ namespace Business.Concrete
             _technologyService = technologyService;
         }
 
-        public IResult Add(Project project )
+        public IDataResult<CreatedProjectDto> Add(Project project)
         {
-            _projectDal.Add(project);
-            return new SuccessResult();
+            var newId = _projectDal.Add(project);
+            return new SuccessDataResult<CreatedProjectDto>(new CreatedProjectDto { ProjectId = newId }, "Proje başarıyla eklendi.");
         }
 
         public IResult Delete(Project project)

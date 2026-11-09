@@ -1,4 +1,4 @@
-﻿using Castle.Core.Resource;
+using Castle.Core.Resource;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             if (optionsBuilder.IsConfigured) return;
 
-            var cs = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
+            var cs = "Server=104.247.167.202\\MSSQLSERVER2022;Database=said5125_MyPortfolio;User ID=said5125_MyPortfolio;Password=179324865.aA;TrustServerCertificate=True;";
 
             if (string.IsNullOrWhiteSpace(cs))
                 throw new InvalidOperationException(
@@ -35,5 +35,12 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Image>()
+                .Property(x => x.Id)
+                .ValueGeneratedNever();
+        }
     }
 }

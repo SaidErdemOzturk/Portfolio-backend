@@ -1,4 +1,4 @@
-﻿using Core.DataAccess.EntityFramework;
+using Core.DataAccess.EntityFramework;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -15,6 +15,22 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfProjectDal : EfEntityRepositoryBase<Project, PortfolioContext>, IProjectDal
     {
+        public new int Add(Project project)
+        {
+            using (var context = new PortfolioContext())
+            {
+                var addedEntity = context.Entry(project);
+                addedEntity.State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                context.SaveChanges();
+                return addedEntity.Entity.Id;
+            }
+        }
+
+        void Core.DataAccess.IEntityRepository<Project>.Add(Project entity)
+        {
+            Add(entity);
+        }
+
         public List<ProjectWithTechnologyDto> GetMoreProjectDto()
         {
             using (var context = new PortfolioContext())

@@ -1,4 +1,4 @@
-﻿using Core.DataAccess;
+using Core.DataAccess;
 using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
 using Entities.Concrete.DTOs;
@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
 {
     public interface IProjectDal : IEntityRepository<Project>
     {
+        new int Add(Project project);
         List<ProjectWithImageAndTechnologyDto> GetProjectsWithImageAndTechnology();
         List<ProjectWithTechnologyDto> GetMoreProjectDto();
     }

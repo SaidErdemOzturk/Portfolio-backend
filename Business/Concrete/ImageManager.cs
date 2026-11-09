@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+using Business.Abstract;
 using Business.Constans;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results.Abstract;
@@ -26,6 +26,12 @@ namespace Business.Concrete
 
         public IResult Add(IFormFile formFile, Image image)
         {
+            if (image.Id == 0)
+            {
+                var allImages = _imageDal.GetAll();
+                image.Id = allImages.Any() ? allImages.Max(i => i.Id) + 1 : 1;
+            }
+
             image.ImagePath = _fileHelper.Upload(formFile, DefaultObjects.ImagePath);
             _imageDal.Add(image);
             return new SuccessResult();
@@ -33,8 +39,13 @@ namespace Business.Concrete
 
         public IResult Delete(Image image)
         {
-            _fileHelper.Delete(DefaultObjects.ImagePath + image.ImagePath);
-            _imageDal.Delete(image);
+            var imageToDelete = _imageDal.Get(i => i.Id == image.Id || (!string.IsNullOrEmpty(image.ImagePath) && i.ImagePath == image.ImagePath));
+            if (imageToDelete == null)
+            {
+                return new ErrorResult("Resim bulunamadı.");
+            }
+            _fileHelper.Delete(DefaultObjects.ImagePath + imageToDelete.ImagePath);
+            _imageDal.Delete(imageToDelete);
             return new SuccessResult();
         }
 

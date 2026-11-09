@@ -1,4 +1,4 @@
-﻿using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
 using Entities.Concrete.DTOs;
 using System;
@@ -15,7 +15,7 @@ namespace Business.Abstract
         IDataResult<List<ProjectWithImageAndTechnologyDto>> GetAllWithDto();
         IDataResult<List<ProjectWithTechnologyDto>> GetMoreProjectDto();
         IDataResult<Project> GetById(int id);
-        IResult Add(Project project);
+        IDataResult<CreatedProjectDto> Add(Project project);
         IResult Update(Project project);
         IResult Delete(Project project);
     }

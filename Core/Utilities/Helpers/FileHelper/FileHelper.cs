@@ -30,13 +30,19 @@ namespace Core.Utilities.Helpers.FileHelper
             return Upload(file, root);
         }
 
-        public string Upload(IFormFile formFile,string direction)
+        public string Upload(IFormFile formFile, string direction)
         {
+            var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), direction);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), direction, fileName);
-            using FileStream fileStream = new FileStream(filePath, FileMode.Create); //FileMode.Create => İşletim sisteminin yeni bir dosya oluşturması gerektiğini belirtir. Dosya zaten mevcutsa, üzerine yazılacaktır.
-            formFile.CopyTo(fileStream); //yola kopyala
-            fileStream.Flush(); //ara belleği temizle
+            var filePath = Path.Combine(directoryPath, fileName);
+            using FileStream fileStream = new FileStream(filePath, FileMode.Create);
+            formFile.CopyTo(fileStream);
+            fileStream.Flush();
             return fileName;
         }
     }
